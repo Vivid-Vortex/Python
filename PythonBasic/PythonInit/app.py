@@ -77,11 +77,20 @@ def whileExample():
     while count < 5:
         print(count)
         count += 1
-
 # whileExample()
 
 def switchCaseOrMatchExampel():
-    day = input("Enter the day of the week: ").lower()
+    lang = input("What programming language do you want to learn: ")
 
-    match
+    match lang:
+        case "JavaScript":
+            print("You can become web developer")
+        case "Python":
+            print("You can become Data Scientist")
+        case "Java":
+            print("You can become Android developer")
+        case _:
+            print("The language doesn't matter, what matters is the solving problems")
+# switchCaseOrMatchExampel()
+
 
