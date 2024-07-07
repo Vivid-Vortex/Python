@@ -18,9 +18,9 @@ def get_sheet_data(file_path, sheet_name):
 
     return sheet_data
 
-# from PythonInit.GetRelativePathForProjectFiles import get_data_path
-# if __name__ == "__main__":
-#     file_path = get_data_path("test-data.xlsx", "resources")
-#     sheet_name = 'Sheet-a'
-#     data = get_sheet_data(file_path, sheet_name)
-#     print(data)
+from PythonInit.GetRelativePathForProjectFiles import get_data_path
+if __name__ == "__main__":
+    file_path = get_data_path("test-data.xlsx", "resources")
+    sheet_name = 'req-payload'
+    data = get_sheet_data(file_path, sheet_name)
+    print(data)
