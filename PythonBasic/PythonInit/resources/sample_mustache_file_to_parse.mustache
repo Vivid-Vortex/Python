@@ -1,0 +1,16 @@
+{
+  "id": {{id}},
+  "name": "{{name}}",
+  "address": [
+    {{#address}}
+      { "city": "{{city}}", "state": "{{state}}" }
+      {{^isLast}},{{/isLast}}
+    {{/address}}
+  ],
+  "contact": [
+    {{#contact}}
+     { "phone": "{{phone}}", "email": "{{email}}" }
+     {{^isLast}},{{/isLast}}
+    {{/contact}}
+  ]
+}

@@ -26,4 +26,5 @@ def build_structure_req_payload(my_dict, template_file_path):
 # my_dict = {"name": "morpheus", "job": "leader"}
 # tempfile_file_path = get_data_path("sample_json_moustache_payload.json", "resources")
 # req_payload = build_structure_req_payload(my_dict, tempfile_file_path)
+# print(req_payload)
 
