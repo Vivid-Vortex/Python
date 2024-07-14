@@ -45,7 +45,6 @@
 # processed_dict = process_list(my_dict)
 # print(json.dumps(processed_dict, indent=2))
 def count_unique_keys(data):
-  print(data)
   if not data:
       return 0
 
@@ -71,13 +70,11 @@ def is_dict_in_list(list_of_dicts, target_dict):
 # result = is_dict_in_list(my_list, target_dict)
 # print(result)  # Output: True
 
-def process_list(lst):
+def process_keys_with_list(lst):
     temp_list = []
     current_dict = {}
     temp_list_size = count_unique_keys(temp_list)
-    print("temp_list_size -------->>>>>>>", temp_list_size)
     target_list_size  = count_unique_keys(lst)
-    print("target_list_size -------->>>>>>>", target_list_size)
     while temp_list_size < target_list_size:
         for item in lst:
             key = next(iter(item))  # Get the key of the current item
@@ -96,23 +93,23 @@ def process_list(lst):
     return temp_list
 
 
-address= [{'city': 'Delhi'}, {'city': 'Bombay'}, {'lane': 'lane 1'}, {'lane': 'lane 2'}]
-respone = process_list(address)
-print(respone)
+# address= [{'city': 'Delhi'}, {'city': 'Bombay'}, {'lane': 'lane 1'}, {'lane': 'lane 2'}]
+# respone = process_keys_with_list(address)
+# print(respone)
 
-def find_list_keys(data):
+def process_dictionary(data):
 
   list_keys = []
   for item in data:
     for key, value in item.items():
       if isinstance(value, list):
-          processed_list = process_list(value)
+          processed_list = process_keys_with_list(value)
           item[key] = processed_list
   return data
 
 my_list = [{'id': 1, 'name': 'morpheus', 'job': 'leader', 'address': [{'city': 'Delhi'}, {'city': 'Bombay'}], 'contact': [{'phone': '9206918946'}, {'email': 'deepak.kumar@gmail.com'}, {'phone': '9206918947'}, {'email': 'kumar.deepak@gmail.com'}]}, {'id': 2, 'name': 'dorpheus', 'job': 'follower'}]
 
-result = find_list_keys(my_list)
+result = process_dictionary(my_list)
 print(result)  # Output: ['address', 'contact']
 
 
