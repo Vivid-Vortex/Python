@@ -30,14 +30,21 @@ def process_dictionary(my_dict):
 
     return {"my_dict": processed_dict}
 
+
 # Example usage
-my_dict = [
-    {'id': 1, 'name': 'morpheus', 'job': 'leader',
-     'address': [{'city': 'Delhi', 'state': 'Union Territory'}, {'city': 'Bombay', 'state': 'Maharashtra'}],
-     'contact': [{'phone': '9206918946', 'email': 'deepak.kumar@gmail.com'},
-                 {'phone': '9206918947', 'email': 'kumar.deepak@gmail.com'}]},
-    {'id': 2, 'name': 'dorpheus', 'job': 'follower'}
-]
+# my_dict = [
+#     {'id': 1, 'name': 'morpheus', 'job': 'leader',
+#      'address': [{'city': 'Delhi', 'state': 'Union Territory'}, {'city': 'Bombay', 'state': 'Maharashtra'}],
+#      'contact': [{'phone': '9206918946', 'email': 'deepak.kumar@gmail.com'},
+#                  {'phone': '9206918947', 'email': 'kumar.deepak@gmail.com'}]},
+#     {'id': 2, 'name': 'dorpheus', 'job': 'follower'}
+# ]
+
+my_dict = [{'id': 1, 'name': 'morpheus', 'job': 'leader', 'address': [{'city': 'Delhi'}, {'city': 'Bombay'}],
+            'contact': [{'phone': '9206918946'}, {'email': 'deepak.kumar@gmail.com'}, {'phone': '9206918947'},
+                        {'email': 'kumar.deepak@gmail.com'}]}, {'id': 2, 'name': 'dorpheus', 'job': 'follower'}]
 
 expected_dict = process_dictionary(my_dict)
+print(expected_dict)
+
 print(json.dumps(expected_dict, indent=4))
