@@ -16,16 +16,16 @@ def render_template(my_dict, template_file):
     Returns:
     - dict: The rendered template as a JSON object, or None if there is an error.
     """
-    def add_comma(context, _):
-        """Helper function to add commas between address objects."""
-        for i in range(len(context['address'])):
-            context['address'][i]['comma'] = (i != len(context['address']) - 1)
-        return context
+    # def add_comma(context, _):
+    #     """Helper function to add commas between address objects."""
+    #     for i in range(len(context['address'])):
+    #         context['address'][i]['comma'] = (i != len(context['address']) - 1)
+    #     return context
 
     with open(template_file, 'r') as file:
         template = file.read()
 
-    my_dict = add_comma(my_dict, None)
+    # my_dict = add_comma(my_dict, None)
     renderer = pystache.Renderer()
     rendered = renderer.render(template, my_dict)
 
