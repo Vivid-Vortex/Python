@@ -97,7 +97,22 @@ def process_list(lst):
 
 
 address= [{'city': 'Delhi'}, {'city': 'Bombay'}, {'lane': 'lane 1'}, {'lane': 'lane 2'}]
-respone  = process_list(address)
+respone = process_list(address)
 print(respone)
+
+def find_list_keys(data):
+
+  list_keys = []
+  for item in data:
+    for key, value in item.items():
+      if isinstance(value, list):
+          processed_list = process_list(value)
+          item[key] = processed_list
+  return data
+
+my_list = [{'id': 1, 'name': 'morpheus', 'job': 'leader', 'address': [{'city': 'Delhi'}, {'city': 'Bombay'}], 'contact': [{'phone': '9206918946'}, {'email': 'deepak.kumar@gmail.com'}, {'phone': '9206918947'}, {'email': 'kumar.deepak@gmail.com'}]}, {'id': 2, 'name': 'dorpheus', 'job': 'follower'}]
+
+result = find_list_keys(my_list)
+print(result)  # Output: ['address', 'contact']
 
 
