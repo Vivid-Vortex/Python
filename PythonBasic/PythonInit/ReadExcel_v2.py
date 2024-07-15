@@ -1,4 +1,6 @@
 import re
+from collections import defaultdict
+
 from openpyxl import load_workbook
 
 
@@ -37,9 +39,32 @@ def get_sheet_data(file_path, sheet_name):
 
     return sheet_data
 
+def merge_dicts_by_id(data):
+    merged_data = defaultdict(dict)
+
+    for entry in data:
+        id_value = entry.get('id')
+        if id_value is not None:
+            for key, value in entry.items():
+                if key != 'id':
+                    merged_data[id_value][key] = value
+            if 'id' not in merged_data[id_value]:
+                merged_data[id_value]['id'] = id_value
+
+    return list(merged_data.values())
+
+def remove_none_values(data):
+    cleaned_data = []
+    for entry in data:
+        cleaned_entry = {key: value for key, value in entry.items() if value is not None}
+        cleaned_data.append(cleaned_entry)
+    return cleaned_data
+
 from PythonInit.GetRelativePathForProjectFiles import get_data_path
 if __name__ == "__main__":
     file_path = get_data_path("test-data-v2.xlsx", "resources")
     sheet_name = 'req-payload2'
     data = get_sheet_data(file_path, sheet_name)
+    data = merge_dicts_by_id(data)
+    data = remove_none_values(data)
     print(data)
