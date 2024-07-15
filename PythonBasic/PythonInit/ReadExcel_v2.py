@@ -39,6 +39,8 @@ def get_sheet_data(file_path, sheet_name):
 
     return sheet_data
 
+from collections import defaultdict
+
 def merge_dicts_by_id(data):
     merged_data = defaultdict(dict)
 
@@ -46,12 +48,13 @@ def merge_dicts_by_id(data):
         id_value = entry.get('id')
         if id_value is not None:
             for key, value in entry.items():
-                if key != 'id':
+                if value is not None:
                     merged_data[id_value][key] = value
             if 'id' not in merged_data[id_value]:
                 merged_data[id_value]['id'] = id_value
 
     return list(merged_data.values())
+
 
 def remove_none_values(data):
     cleaned_data = []
@@ -66,5 +69,5 @@ if __name__ == "__main__":
     sheet_name = 'req-payload2'
     data = get_sheet_data(file_path, sheet_name)
     data = merge_dicts_by_id(data)
-    data = remove_none_values(data)
+    # data = remove_none_values(data)
     print(data)
