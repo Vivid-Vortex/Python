@@ -1,0 +1,31 @@
+{
+  "resultId": {{resultId}},
+  "searchData": "{{searchData}}",
+  "routes": [
+    {{#routes}}
+      {
+        "routesOrigin": "{{routesOrigin}}",
+        "routesDestination": "{{routesDestination}}",
+        "segments": [
+          {{#segments}}
+            {
+              "segOrigin": "{{segOrigin}}",
+              "segDestination": "{{segDestination}}",
+              "legs": [
+                {{#legs}}
+                  {
+                    "legOrigin": "{{legOrigin}}",
+                    "legDestination": "{{legDestination}}"
+                  }
+                  {{^isLast}},{{/isLast}}
+                {{/legs}}
+              ]
+            }
+            {{^isLast}},{{/isLast}}
+          {{/segments}}
+        ]
+      }
+      {{^isLast}},{{/isLast}}
+    {{/routes}}
+  ]
+}

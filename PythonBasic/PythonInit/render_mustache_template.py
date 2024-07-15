@@ -57,7 +57,7 @@ def add_commas(data):
 #     ]
 # }
 
-my_dict = { "id": 1, "name": "morpheus", "job": "leader", "address": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }
+my_dict = { "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }
 data_file_to_access = "sample_mustache_file_to_parse.mustache"
 relative_path_from_current_file = "resources"
 template_file = get_data_path(data_file_to_access, relative_path_from_current_file)
