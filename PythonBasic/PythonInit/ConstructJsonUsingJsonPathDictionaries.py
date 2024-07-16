@@ -81,41 +81,43 @@ def convert_dict_to_list(obj):
 
 
 # Example usage
-# data = {
-#     'id': 1,
-#     'requestJsonPaths': {
-#         'request[0].identity': 123,
-#         'request[0].name': 'John Doe',
-#         'request[0].address[0].city': 'New York',
-#         'request[0].address[0].state': 'NY',
-#         'request[0].contact[0].phone': '123-456-7890',
-#         'request[0].contact[0].email': 'johndoe@example.com',
-#         'request[0].address[1].city': 'Los Angeles',
-#         'request[0].address[1].state': 'CA',
-#         'request[0].contact[1].phone': '987-654-3210',
-#         'request[0].contact[1].email': 'johndoe2@example.com'
-#     }
-# }
-
-# below data as out request without any index
 data = {
     'id': 1,
     'requestJsonPaths': {
-        'request.identity': 123,
-        'request.name': 'John Doe',
-        'request.address[0].city': 'New York',
-        'request.address[0].state': 'NY',
-        'request.contact[0].phone': '123-456-7890',
-        'request.contact[0].email': 'johndoe@example.com',
-        'request.address[1].city': 'Los Angeles',
-        'request.address[1].state': 'CA',
-        'request.contact[1].phone': '987-654-3210',
-        'request.contact[1].email': 'johndoe2@example.com'
+        'request[0].identity': 123,
+        'request[0].name': 'John Doe',
+        'request[0].address[0].city': 'New York',
+        'request[0].address[0].state': 'NY',
+        'request[0].contact[0].phone': '123-456-7890',
+        'request[0].contact[0].email': 'johndoe@example.com',
+        'request[0].address[1].city': 'Los Angeles',
+        'request[0].address[1].state': 'CA',
+        'request[0].contact[1].phone': '987-654-3210',
+        'request[0].contact[1].email': 'johndoe2@example.com'
     }
 }
 
+# below data as out request without any index
+# data = {
+#     'id': 1,
+#     'requestJsonPaths': {
+#         'request.identity': 123,
+#         'request.name': 'John Doe',
+#         'request.address[0].city': 'New York',
+#         'request.address[0].state': 'NY',
+#         'request.contact[0].phone': '123-456-7890',
+#         'request.contact[0].email': 'johndoe@example.com',
+#         'request.address[1].city': 'Los Angeles',
+#         'request.address[1].state': 'CA',
+#         'request.contact[1].phone': '987-654-3210',
+#         'request.contact[1].email': 'johndoe2@example.com'
+#     }
+# }
+
 constructed_json = construct_json_from_paths(data)
+print(constructed_json)
 structured_json = convert_dict_to_list(constructed_json)
+print(structured_json)
 structured_json = structured_json['request']
 
 # Ensure the top-level object is an array

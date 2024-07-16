@@ -36,26 +36,33 @@ def render_template(my_dict, template_file):
         print(f"Error decoding JSON: {e}")
         print(f"Rendered content:\n{rendered}")
         return None
-def add_commas(data):
-    def process_dict(d):
+def add_commas(data, is_outermost=True):
+    def process_dict(d, is_outermost):
         for key, value in d.items():
             if isinstance(value, list):
-                for index, item in enumerate(value):
-                    if index < len(value) - 1:
-                        item['isLast'] = False
-                    else:
-                        item['isLast'] = True
+                process_list(value)
+            elif isinstance(value, dict):
+                process_dict(value, False)
 
-    if isinstance(data, list):
-        for index, item in enumerate(data):
-            if index < len(data) - 1:
+    def process_list(lst):
+        for index, item in enumerate(lst):
+            if index < len(lst) - 1:
                 item['isLast'] = False
             else:
                 item['isLast'] = True
-            process_dict(item)
+            if isinstance(item, dict):
+                process_dict(item, False)
+
+    if isinstance(data, list):
+        process_list(data)
     elif isinstance(data, dict):
-        process_dict(data)
-        data['isLast'] = True  # Single dictionary is always considered 'last' since there's no outer array
+        for key, value in data.items():
+            if isinstance(value, list):
+                process_list(value)
+            elif isinstance(value, dict):
+                process_dict(value, False)
+        if not is_outermost:
+            data['isLast'] = True
 
     return data
 # def add_commas(data):
@@ -79,7 +86,8 @@ def add_commas(data):
 # }
 
 # my_dict = { "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }
-my_dict = [{ "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }]
+# my_dict = [{ "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }]
+my_dict = { "request": [{ "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }]}
 data_file_to_access = "sample_mustache_file_to_parse.mustache"
 relative_path_from_current_file = "resources"
 template_file = get_data_path(data_file_to_access, relative_path_from_current_file)
