@@ -1,17 +1,37 @@
 import json
 
+
 def construct_json_from_paths(data):
     def set_nested_item(data_dict, keys, value):
         for key in keys[:-1]:
             if key.isdigit():
                 key = int(key)
-            if key not in data_dict:
-                data_dict[key] = {}
-            data_dict = data_dict[key]
+                if isinstance(data_dict, dict):
+                    if key not in data_dict:
+                        data_dict[key] = {}
+                    data_dict = data_dict[key]
+                elif isinstance(data_dict, list):
+                    while len(data_dict) <= key:
+                        data_dict.append({})
+                    data_dict = data_dict[key]
+            else:
+                if isinstance(data_dict, dict):
+                    data_dict = data_dict.setdefault(key, {})
+                elif isinstance(data_dict, list):
+                    data_dict = data_dict[int(key)]
+
         last_key = keys[-1]
         if last_key.isdigit():
             last_key = int(last_key)
-        data_dict[last_key] = value
+            if isinstance(data_dict, dict):
+                while len(data_dict) <= last_key:
+                    data_dict[last_key] = {}
+            elif isinstance(data_dict, list):
+                while len(data_dict) <= last_key:
+                    data_dict.append(None)
+            data_dict[last_key] = value
+        else:
+            data_dict[last_key] = value
 
     def parse_key(key):
         # This function splits the key by dots and converts array indices to int
@@ -46,6 +66,7 @@ def construct_json_from_paths(data):
 
     return request_json
 
+
 def convert_dict_to_list(obj):
     if isinstance(obj, dict):
         # If all keys are integers, convert to list
@@ -57,6 +78,7 @@ def convert_dict_to_list(obj):
     elif isinstance(obj, list):
         obj = [convert_dict_to_list(elem) for elem in obj]
     return obj
+
 
 # Example usage
 data = {
@@ -76,5 +98,10 @@ data = {
 }
 
 constructed_json = construct_json_from_paths(data)
-constructed_json = convert_dict_to_list(constructed_json)
-print(json.dumps(constructed_json, indent=4))
+structured_json = convert_dict_to_list(constructed_json)
+
+# Ensure the top-level object is an array
+if 'request' in structured_json:
+    structured_json = structured_json['request']
+
+print(json.dumps(structured_json, indent=4))
