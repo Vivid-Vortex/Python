@@ -3,6 +3,14 @@ from collections import defaultdict
 
 from openpyxl import load_workbook
 
+def convert_to_boolean(value):
+    if isinstance(value, str):
+        lower_value = value.strip().lower()
+        if lower_value == 'false':
+            return False
+        elif lower_value == 'true':
+            return True
+    return value
 
 def get_sheet_data(file_path, sheet_name):
     workbook = load_workbook(filename=file_path, data_only=True)
@@ -22,7 +30,7 @@ def get_sheet_data(file_path, sheet_name):
     print(f"Index columns: {index_columns}")
 
     for row in sheet.iter_rows(min_row=2, values_only=True):
-        row_data = {headers[i]: row[i] for i in range(len(headers)) if headers[i]}
+        row_data = {headers[i]: convert_to_boolean(row[i]) for i in range(len(headers)) if headers[i]}
 
         # Replace placeholders in headers with actual values
         processed_row_data = {}
