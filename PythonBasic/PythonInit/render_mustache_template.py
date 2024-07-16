@@ -47,13 +47,17 @@ def add_commas(data):
                         item['isLast'] = True
 
     if isinstance(data, list):
-        for item in data:
+        for index, item in enumerate(data):
+            if index < len(data) - 1:
+                item['isLast'] = False
+            else:
+                item['isLast'] = True
             process_dict(item)
     elif isinstance(data, dict):
         process_dict(data)
+        data['isLast'] = True  # Single dictionary is always considered 'last' since there's no outer array
 
     return data
-
 # def add_commas(data):
 #     for key, value in data.items():
 #         if isinstance(value, list):
@@ -75,12 +79,12 @@ def add_commas(data):
 # }
 
 # my_dict = { "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }
-# my_dict = [{ "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }]
-# data_file_to_access = "sample_mustache_file_to_parse.mustache"
-# relative_path_from_current_file = "resources"
-# template_file = get_data_path(data_file_to_access, relative_path_from_current_file)
-#
-# my_dict = add_commas(my_dict)
-# print(my_dict)
+my_dict = [{ "id": 1, "name": "morpheus", "job": "leader", "address1": [ { "city": "Delhi", "state": "Union Territory" }, { "city": "Bombay", "state": "Maharashtra" } ], "contact": [ { "phone": "9206918946", "email": "deepak.kumar@gmail.com" }, { "phone": "9206918947", "email": "kumar.deepak@gmail.com" } ] }]
+data_file_to_access = "sample_mustache_file_to_parse.mustache"
+relative_path_from_current_file = "resources"
+template_file = get_data_path(data_file_to_access, relative_path_from_current_file)
+
+my_dict = add_commas(my_dict)
+print(my_dict)
 # rendered_output = render_template(my_dict, template_file)
 # print(rendered_output)
