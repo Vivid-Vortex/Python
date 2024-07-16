@@ -63,6 +63,32 @@ def remove_none_values(data):
         cleaned_data.append(cleaned_entry)
     return cleaned_data
 
+def process_dicts(data):
+  """
+  Processes a list of dictionaries, filtering out keys with "request" prefix,
+  moving them to a separate dictionary within each main dictionary,
+  and returns the modified list.
+
+  Args:
+    data: A list of dictionaries.
+
+  Returns:
+    A new list of dictionaries with the processed data.
+  """
+
+  processed_data = []
+  for entry in data:
+    request_data = {}
+    filtered_data = {}
+    for key, value in entry.items():
+      if key.startswith("request"):
+        request_data[key] = value
+      else:
+        filtered_data[key] = value
+    filtered_data["requestJsonPaths"] = request_data  # Add "request" dictionary
+    processed_data.append(filtered_data)
+  return processed_data
+
 from PythonInit.GetRelativePathForProjectFiles import get_data_path
 if __name__ == "__main__":
     file_path = get_data_path("test-data-v2.xlsx", "resources")
@@ -70,4 +96,5 @@ if __name__ == "__main__":
     data = get_sheet_data(file_path, sheet_name)
     data = merge_dicts_by_id(data)
     # data = remove_none_values(data)
+    data = process_dicts(data)
     print(data)
