@@ -46,6 +46,18 @@ def construct_json_from_paths(data):
 
     return request_json
 
+def convert_dict_to_list(obj):
+    if isinstance(obj, dict):
+        # If all keys are integers, convert to list
+        if all(isinstance(key, int) for key in obj.keys()):
+            obj = [convert_dict_to_list(obj[key]) for key in sorted(obj.keys())]
+        else:
+            for key in obj.keys():
+                obj[key] = convert_dict_to_list(obj[key])
+    elif isinstance(obj, list):
+        obj = [convert_dict_to_list(elem) for elem in obj]
+    return obj
+
 # Example usage
 data = {
     'id': 1,
@@ -64,4 +76,5 @@ data = {
 }
 
 constructed_json = construct_json_from_paths(data)
+constructed_json = convert_dict_to_list(constructed_json)
 print(json.dumps(constructed_json, indent=4))
